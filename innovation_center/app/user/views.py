@@ -14,10 +14,11 @@ def login():
         u = User.query.filter_by(email=form.email.data.lower()).first()
         if u is not None and u.verify_password(form.password.data):
             login_user(u)
-            flash('successfully logged in')
-            return redirect(url_for('base.html'))
+            flash('successfully logged in', 'success')
+            return redirect(url_for('root.home'))
         flash('invalid login')
     return render_template('user/login.html', form=form)
+
 
 @user.route('/logout')
 def logout():
@@ -25,6 +26,7 @@ def logout():
     logout_user()
     flash('you were successfully logged out')
     return redirect(url_for('root.home'))
+
 
 @user.route('/register', methods=['GET', 'POST'])
 def register():
@@ -40,5 +42,6 @@ def register():
         )
         db.session.add(new_user)
         flash('successfully registered!', 'success')
+        print(User.query.all())
         return redirect(url_for('user.login'))
     return render_template('user/register.html', form=form)
