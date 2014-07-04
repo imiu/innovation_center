@@ -1,16 +1,18 @@
-import unittest
+from . import TestCase
 from flask import current_app
-from innovation_center.app import create_app
+from innovation_center.app.extensions import db
+from innovation_center.app.user.models import User
 
-class SetupTest(unittest.TestCase):
-    def setUp(self):
-        self.app = create_app('TESTING')
-        self.ctx = self.app.app_context()
-        self.ctx.push()
-        self.client = self.app.test_client()
+class SetupTest(TestCase):
 
-    def tearDown(self):
-        self.ctx.pop()
-
-    def test_app_created(self):
+    def test_app_exists(self):
         self.assertTrue(current_app is not None)
+
+    def test_config_type(self):
+        self.assertTrue('TESTING' in current_app.config)
+
+    def test_db_populated(self):
+        valid_user = User.query.filter_by(email="crow@corvid.com").first()
+        self.assertTrue(valid_user is not None)
+        invalid = User.query.filter_by(email="invalid@email.com").first()
+        self.assertTrue(invalid is None)

@@ -6,7 +6,7 @@ from werkzeug.exceptions import default_exceptions
 from werkzeug.exceptions import HTTPException
 from logging import Formatter
 from logging.handlers import RotatingFileHandler
-from .extensions import db, login_manager
+from .extensions import flask_ext
 from ..config import config as c
 
 
@@ -19,7 +19,9 @@ def create_app(environment='DEFAULT'):
     configure_logger(app)
 
     from .root import root
+    from .user import user
     app.register_blueprint(root)
+    app.register_blueprint(user, url_prefix='/user')
 
     for code in default_exceptions.keys():
         app.error_handler_spec[None][code] = make_error_json
@@ -29,8 +31,8 @@ def create_app(environment='DEFAULT'):
 
 def configure_extensions(app):
     """ loads the flask extensions onto the application """
-    db.init_app(app)
-    login_manager.init_app(app)
+    for extension in flask_ext:
+        extension.init_app(app)
 
 
 def configure_logger(app):
