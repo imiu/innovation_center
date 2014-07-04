@@ -18,7 +18,7 @@ def initdb():
         email='dreadsin@gmail.com',
         role_code=ADMIN,
         username='admin',
-        password='a-cat-among-men'
+        password='password'
     )
     db.session.add(admin)
     db.session.commit()

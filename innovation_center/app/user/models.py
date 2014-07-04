@@ -1,5 +1,5 @@
 from werkzeug.security import generate_password_hash, check_password_hash
-from hashlib import md5
+import hashlib
 from datetime import datetime
 from ..extensions import db, login_manager
 from .roles import USER_ROLE, ADMIN, USER
@@ -7,7 +7,7 @@ from flask.ext.login import UserMixin
 
 @login_manager.user_loader
 def load_user(identification):
-    return User.query.get(id(identification))
+    return User.query.get(int(identification))
 
 
 class User(db.Model, UserMixin):
@@ -39,12 +39,11 @@ class User(db.Model, UserMixin):
     def gravatar(self, size=128, default='identicon', rating='g'):
         """ user avatar, using gravatar """
         return 'http://www.gravatar.com/avatar/{}?s={}&d={}&r={}'.format(
-            md5(self.email.encode('utf-8')).hexdigest(), size, rating, default
+            hashlib.md5(self.email.encode('utf-8')).hexdigest(), size, default, rating
         )
 
     # the user's role
     role_code = db.Column(db.SmallInteger, default=USER, nullable=False)
-
     @property
     def role(self):
         return USER_ROLE[self.role_code]
