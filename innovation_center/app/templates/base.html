@@ -2,7 +2,6 @@
 {% block navbar %}
 <nav class="navbar navbar-default" role="navigation">
   <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
         <span class="sr-only">Toggle navigation</span>
@@ -33,8 +32,8 @@
             <li><a href="{{ url_for('user.register') }}">Register</a></li>
         {% endif %}
       </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
+    </div>
+  </div>
 </nav>
 <div class="container text-center">
 {% with messages = get_flashed_messages(with_categories=true) %}
@@ -49,6 +48,8 @@
 </div>
 {% endblock %}
 {% block scripts %}
+  {{ super() }}
   <script type="text/javascript">
+    $('.flashes').delay(3000).fadeOut('slow');
   </script>
 {% endblock %}
