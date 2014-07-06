@@ -20,16 +20,18 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Account<span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Action</a></li>
+            {% if current_user.is_admin() %}
+              <li><a href="/admin/user">Admin Dashboard</a></li>
+            {% endif %}
             <li><a href="#">Another action</a></li>
             <li><a href="#">Something else here</a></li>
             <li class="divider"></li>
-            <li><a href="#">Separated link</a></li>
+            <li><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
           </ul>
         </li>
         {% else %}
-            <li><a href="{{ url_for('user.login') }}">Log In</a></li>
-            <li><a href="{{ url_for('user.register') }}">Register</a></li>
+            <li><a href="{{ url_for('auth.login') }}">Log In</a></li>
+            <li><a href="{{ url_for('auth.register') }}">Register</a></li>
         {% endif %}
       </ul>
     </div>
@@ -38,9 +40,8 @@
 <div class="container text-center">
 {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
-    <ul class=flashes>
     {% for category, message in messages %}
-      <li class="alert alert-{{ category }}">{{ message }}</li>
+      <div class="flashes alert alert-{{ category }}">{{ message }}</div>
     {% endfor %}
     </ul>
   {% endif %}
