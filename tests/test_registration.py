@@ -1,6 +1,6 @@
 from . import TestCase
-from innovation_center.app.user.models import User
-from innovation_center.app.user.forms import RegistrationForm
+from innovation_center.app.auth.models import User
+from innovation_center.app.auth.forms import RegistrationForm
 from innovation_center.app.extensions import db
 
 class RegistrationTest(TestCase):

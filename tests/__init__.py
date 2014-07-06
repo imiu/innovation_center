@@ -1,7 +1,7 @@
 import unittest
 from innovation_center.app import create_app
 from innovation_center.app.extensions import db
-from innovation_center.app.user.models import User
+from innovation_center.app.auth.models import User
 
 class TestCase(unittest.TestCase):
     def init_db(self):

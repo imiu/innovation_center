@@ -1,7 +1,7 @@
 from . import TestCase
 from flask import current_app
 from innovation_center.app.extensions import db
-from innovation_center.app.user.models import User
+from innovation_center.app.auth.models import User
 
 class SetupTest(TestCase):
 
