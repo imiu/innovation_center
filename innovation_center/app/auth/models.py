@@ -3,7 +3,7 @@ import hashlib
 from datetime import datetime
 from ..extensions import db, login_manager
 from .roles import USER_ROLE, ADMIN, USER
-from flask.ext.login import UserMixin
+from flask.ext.login import UserMixin, AnonymousUserMixin
 
 @login_manager.user_loader
 def load_user(identification):
@@ -16,7 +16,7 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(64))
     last_name = db.Column(db.String(64))
-    username = db.Column(db.String(24), unique=True)
+    username = db.Column(db.String(24), unique=True, index=True)
     email = db.Column(db.String(128), unique=True)
     joined = db.Column(db.DateTime, default=datetime.utcnow)
 
@@ -53,3 +53,9 @@ class User(db.Model, UserMixin):
 
     def __repr__(self):
         return '<User {} (email={})>'.format(self.username, self.email)
+
+
+class AnonymousUser(AnonymousUserMixin):
+    """ a user who is not logged in """
+    def is_admin(self):
+        return False

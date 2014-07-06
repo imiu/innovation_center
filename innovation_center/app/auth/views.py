@@ -44,3 +44,11 @@ def register():
         flash('successfully registered!', 'success')
         return redirect(url_for('auth.login'))
     return render_template('user/register.html', form=form)
+
+@auth.route('/profile/<username>')
+def profile(username):
+    """ a user's profile """
+    u = User.query.filter_by(username=username).first()
+    if u is None:
+        abort(404)
+    return render_template('user/profile.html', user=u)

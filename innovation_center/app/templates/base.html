@@ -1,4 +1,8 @@
 {% extends "bootstrap/base.html" %}
+{% block styles %}
+  {{ super() }}
+  <link href="{{ url_for('static', filename='css/base.css') }}" rel="stylesheet"/>
+{% endblock %}
 {% block navbar %}
 <nav class="navbar navbar-default" role="navigation">
   <div class="container-fluid">
@@ -23,8 +27,7 @@
             {% if current_user.is_admin() %}
               <li><a href="/admin/user">Admin Dashboard</a></li>
             {% endif %}
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
+            <li><a href="{{ url_for('auth.profile', username=current_user.username) }}">My Profile</a></li>
             <li class="divider"></li>
             <li><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
           </ul>
@@ -41,7 +44,7 @@
 {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
     {% for category, message in messages %}
-      <div class="flashes alert alert-{{ category }}">{{ message }}</div>
+      <div class="flashes alert alert-{{ category }} alert-dismissable"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>{{ message }}</div>
     {% endfor %}
     </ul>
   {% endif %}

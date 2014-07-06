@@ -4,10 +4,10 @@ from flask import Flask
 from flask import jsonify
 from logging import Formatter
 from logging.handlers import RotatingFileHandler
+
 from .auth.models import User
-from flask.ext.admin.contrib.sqla import ModelView
 from .extensions import db, login_manager, bootstrap, admin
-from .admin_interface.views import AdminViews
+from .admin_interface.views import AdminViews, UserViews
 from ..config import config as c
 
 
@@ -33,7 +33,7 @@ def configure_extensions(app):
 
     login_manager.init_app(app)
     login_manager.session_protected = 'strong'
-    login_manager.login_view = 'user.login'
+    login_manager.login_view = 'auth.login'
 
     bootstrap.init_app(app)
 
@@ -45,6 +45,7 @@ def configure_logger(app):
     """ put a logger on the application """
     if app.testing or app.debug:
         return
+
     flask_log = RotatingFileHandler(
         os.path.join(app.config['LOG_FOLDER'], 'flask.log'),
         maxBytes=10000,
@@ -60,4 +61,4 @@ def configure_logger(app):
 
 def init_admin_views(app, db):
     """ gives flask-admin the views to use """
-    admin.add_view(ModelView(User, db.session))
+    admin.add_view(UserViews(User, db.session))

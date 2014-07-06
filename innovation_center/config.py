@@ -21,6 +21,7 @@ class TestingConfig(DefaultConfig):
     SQLALCHEMY_DATABASE_URI = 'sqlite://'
     WTF_CSRF_ENABLED = False
 
+
 config = {
     'DEFAULT': DefaultConfig,
     'DEVELOPMENT': DevelopmentConfig,
