@@ -45,6 +45,7 @@ def register():
         return redirect(url_for('auth.login'))
     return render_template('user/register.html', form=form)
 
+
 @auth.route('/profile/<username>')
 def profile(username):
     """ a user's profile """

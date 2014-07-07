@@ -1,36 +1,48 @@
-import unittest
+from flask.ext.testing import TestCase as Base
+
 from innovation_center.app import create_app
 from innovation_center.app.extensions import db
 from innovation_center.app.auth.models import User
+from innovation_center.app.auth.roles import ADMIN, USER
 
-class TestCase(unittest.TestCase):
-    def init_db(self):
-        u = User(
-            first_name="Alex",
-            last_name="Frazer",
-            password="password",
-            username="crow",
-            email="email@email.com"
+class TestCase(Base):
+    def create_app(self):
+        """ create the application for flask-testing """
+        return create_app('TESTING')
+
+    def init_data(self):
+        """ Put some generic info in the database """
+        new_user = User(
+            username=u'jackdaw',
+            email=u'jackdaw@corvid.com',
+            password=u'the_jackdaw',
+            role_code=USER,
+            first_name=u'jackdaw',
+            last_name=u'corvid'
         )
         admin = User(
-            first_name="Alex",
-            last_name="Frazer",
-            password="password",
-            username="admin_crow",
-            email="crow@corvid.com"
+            username=u'crow',
+            email=u'crow@corvid.com',
+            password=u'a_cat_among_men',
+            role_code=ADMIN,
+            first_name=u'crow',
+            last_name=u'corvid'
         )
-        db.session.add(u)
+        db.session.add(new_user)
         db.session.add(admin)
         db.session.commit()
 
     def setUp(self):
-        self.app = create_app('TESTING')
-        self.ctx = self.app.app_context()
-        self.ctx.push()
-        self.client = self.app.test_client()
         db.create_all()
-        self.init_db()
+        self.init_data()
 
     def tearDown(self):
         db.drop_all()
-        self.ctx.pop()
+
+    def login(self, email, password):
+        credentials = dict(
+            email=email,
+            password=password
+        )
+        resp = self.client.post('/user/login', data=credentials, follow_redirects=True)
+        return resp

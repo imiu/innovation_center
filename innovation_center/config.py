@@ -2,7 +2,7 @@ import os
 
 _basedir = os.path.abspath(os.path.dirname(__file__))
 
-class DefaultConfig:
+class DefaultConfig(object):
     SECRET_KEY = os.urandom(24)
     SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(_basedir, 'data.sqlite')
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
@@ -19,6 +19,8 @@ class DevelopmentConfig(DefaultConfig):
 class TestingConfig(DefaultConfig):
     TESTING = True
     SQLALCHEMY_DATABASE_URI = 'sqlite://'
+    SQLALCHEMY_ECHO = False
+    SQLALCHEMY_COMMIT_ON_TEARDOWN = False
     WTF_CSRF_ENABLED = False
 
 

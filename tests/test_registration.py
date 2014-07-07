@@ -1,17 +1,26 @@
-from . import TestCase
+from tests import TestCase
+import sys
+
 from innovation_center.app.auth.models import User
 from innovation_center.app.auth.forms import RegistrationForm
 from innovation_center.app.extensions import db
 
-class RegistrationTest(TestCase):
-    def test_new_user_registration(self):
-        self.client.get('/user/register')
-        form = RegistrationForm(
-            email=u'crow@crow.com',
-            first_name=u'Alex',
-            last_name=u'Frazer',
-            username=u'corvid',
-            password=u'fake_password',
-            confirm_password=u'fake_password'
+class RegistrationTests(TestCase):
+
+    def test_page_exists(self):
+        resp = self.client.get('/user/register')
+        self.assertEquals(resp.status_code, 200)
+
+    def test_valid_registration(self):
+        """ test a user registering for the first time, valid """
+        r = dict(
+            email='magpie@corvid.com',
+            username='magpie',
+            password='I_do_not_caw',
+            confirm_password='I_do_not_caw',
+            first_name='magpie',
+            last_name='corvid'
         )
-        self.assertTrue(form.validate())
+        resp = self.client.post('/user/register', data=r, follow_redirects=True)
+        self.assertEquals(resp.status_code, 200)
+        
