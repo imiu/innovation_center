@@ -1,6 +1,7 @@
 from flask.ext.admin import BaseView, expose
 from flask.ext.admin.contrib.sqla import ModelView
 from flask.ext.login import current_user
+from flask import url_for
 
 class AdminViews(BaseView):
     def is_accessible(self):

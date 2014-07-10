@@ -2,11 +2,12 @@ import os
 import logging
 from flask import Flask
 from flask import jsonify
+from flask.ext.admin.contrib.fileadmin import FileAdmin
 from logging import Formatter
 from logging.handlers import RotatingFileHandler
 
-from .auth.models import User
-from .extensions import db, login_manager, bootstrap, admin
+from .models import User
+from .extensions import db, login_manager, bootstrap, admin, moment
 from .admin_interface.views import AdminViews, UserViews
 from ..config import config as c
 
@@ -38,7 +39,10 @@ def configure_extensions(app):
     bootstrap.init_app(app)
 
     admin.init_app(app)
-    init_admin_views(app, db)
+    admin.add_view(UserViews(User, db.session, endpoint='User'))
+    admin.add_view(FileAdmin(app.static_folder, '/static/', name='Static Files'))
+
+    moment.init_app(app)
 
 
 def configure_logger(app):
@@ -57,8 +61,4 @@ def configure_logger(app):
         '[in %(pathname)s:%(lineno)d]'
     ))
     app.logger.addHandler(flask_log)
-
-
-def init_admin_views(app, db):
-    """ gives flask-admin the views to use """
-    admin.add_view(UserViews(User, db.session))
+    

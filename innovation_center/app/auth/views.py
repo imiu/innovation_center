@@ -1,10 +1,11 @@
 from flask import render_template, flash, redirect, url_for
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from .forms import LoginForm, RegistrationForm
-from .models import User
-from ..extensions import db
+from ..models import User
+from innovation_center.app.extensions import db
 
 from . import auth
+import sys
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():

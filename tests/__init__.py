@@ -1,17 +1,14 @@
-from flask.ext.testing import TestCase as Base
+import unittest
 
 from innovation_center.app import create_app
 from innovation_center.app.extensions import db
-from innovation_center.app.auth.models import User
-from innovation_center.app.auth.roles import ADMIN, USER
+from innovation_center.app.models import User
+from innovation_center.app.constants import ADMIN, USER
 
-class TestCase(Base):
-    def create_app(self):
-        """ create the application for flask-testing """
-        return create_app('TESTING')
+class TestCase(unittest.TestCase):
 
     def init_data(self):
-        """ Put some generic info in the database """
+        """ Put some generic info in the database
         new_user = User(
             username=u'jackdaw',
             email=u'jackdaw@corvid.com',
@@ -30,19 +27,17 @@ class TestCase(Base):
         )
         db.session.add(new_user)
         db.session.add(admin)
-        db.session.commit()
+        db.session.commit()"""
 
     def setUp(self):
+        self.app = create_app('TESTING')
+        self.ctx = self.app.app_context()
+        self.ctx.push()
+        self.client = self.app.test_client()
         db.create_all()
         self.init_data()
 
     def tearDown(self):
+        self.ctx.pop()
+        db.session.remove()
         db.drop_all()
-
-    def login(self, email, password):
-        credentials = dict(
-            email=email,
-            password=password
-        )
-        resp = self.client.post('/user/login', data=credentials, follow_redirects=True)
-        return resp

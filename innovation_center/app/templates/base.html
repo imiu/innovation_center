@@ -1,4 +1,5 @@
 {% extends "bootstrap/base.html" %}
+{% import "macros.html" as macros %}
 {% block styles %}
   {{ super() }}
   <link href="{{ url_for('static', filename='css/base.css') }}" rel="stylesheet"/>
@@ -13,7 +14,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="{{ url_for('root.home') }}">Innovation Center</a>
+      <a class="navbar-brand" href="{{ url_for('root.home') }}">{{ config['PROJECT'] }}</a>
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
@@ -25,7 +26,7 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Account<span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             {% if current_user.is_admin() %}
-              <li><a href="/admin/user">Admin Dashboard</a></li>
+              <li><a href="{{ url_for('admin.index') }}">Admin Dashboard</a></li>
             {% endif %}
             <li><a href="{{ url_for('auth.profile', username=current_user.username) }}">My Profile</a></li>
             <li class="divider"></li>
@@ -51,8 +52,41 @@
 {% endwith %}
 </div>
 {% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col-md-7 col-md-offset-1">
+    {% for article in articles %}
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title lead">
+          {{ article.title }}
+        </h3>
+      </div>
+      <div class="panel-body text">
+        {{ article.body }}
+      </div>
+      <div class="panel-footer text-muted">
+        <img class="img-circle" src="{{ article.author.gravatar(size=64) }}">
+        Written by {{ article.author.first_name }} {{ article.author.last_name }} on 
+        {{ moment(article.time_written).format('LLLL') }}
+      </div>
+    </div>
+    {% endfor %}
+    <div class="pagination">
+      {{ macros.pagination(pagination, 'root.home') }}
+    </div>
+  </div>
+  <div class="col-md-4">
+    <h1 class="lead">
+      About this Site
+    </h1>
+    <p>stuff goes here now</p>
+  </div>
+</div>
+{% endblock %}
 {% block scripts %}
   {{ super() }}
+  {{ moment.include_moment() }}
   <script type="text/javascript">
     $('.flashes').delay(3000).fadeOut('slow');
   </script>

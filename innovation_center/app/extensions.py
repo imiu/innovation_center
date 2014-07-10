@@ -8,4 +8,7 @@ from flask.ext.bootstrap import Bootstrap
 bootstrap = Bootstrap()
 
 from flask.ext.admin import Admin
-admin = Admin(name='Admin')
+admin = Admin(name='Admin Dashboard')
+
+from flask.ext.moment import Moment
+moment = Moment()
