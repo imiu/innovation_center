@@ -9,5 +9,10 @@ def home():
         page, per_page=app.config['RESULTS_PER_PAGE']
     )
     articles = paginate.items
-    print(paginate.page)
     return render_template('base.html', articles=articles, pagination=paginate)
+
+
+@root.route('/article/<int:article_id>')
+def get_article(article_id):
+	article = NewsArticle.query.get_or_404(article_id)
+	return render_template('article/article.html', article=article)
