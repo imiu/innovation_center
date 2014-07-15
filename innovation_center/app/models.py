@@ -80,7 +80,7 @@ class User(db.Model, UserMixin):
 class NewsArticle(db.Model):
     __tablename__ = 'news_articles'
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(128))
+    title = db.Column(db.String(512))
     body = db.Column(db.Text())
     time_written = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
