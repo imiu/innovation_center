@@ -26,6 +26,11 @@ class TestingConfig(DefaultConfig):
     WTF_CSRF_ENABLED = False
 
 
+class ProductionConfig(DefaultConfig):
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
+        'sqlite:///' + os.path.join(_basedir, 'data.sqlite')
+
+
 config = {
     'DEFAULT': DefaultConfig,
     'DEVELOPMENT': DevelopmentConfig,

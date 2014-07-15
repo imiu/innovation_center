@@ -1,8 +1,8 @@
 import os
+import sys
 import logging
 from flask import Flask
 from flask import jsonify
-from flask.ext.admin.contrib.fileadmin import FileAdmin
 from logging import Formatter
 from logging.handlers import RotatingFileHandler
 
@@ -38,10 +38,6 @@ def configure_extensions(app):
 
     bootstrap.init_app(app)
 
-    admin.init_app(app)
-    admin.add_view(UserViews(User, db.session, endpoint='User'))
-    admin.add_view(FileAdmin(app.static_folder, '/static/', name='Static Files'))
-
     moment.init_app(app)
 
 
@@ -50,6 +46,8 @@ def configure_logger(app):
     if app.testing or app.debug:
         return
 
+    stream_handler = logging.StreamHandler(stream=sys.stderr)
+    stream_handler.setLevel(logging.WARNING)
     flask_log = RotatingFileHandler(
         os.path.join(app.config['LOG_FOLDER'], 'flask.log'),
         maxBytes=10000,
@@ -61,4 +59,5 @@ def configure_logger(app):
         '[in %(pathname)s:%(lineno)d]'
     ))
     app.logger.addHandler(flask_log)
+    app.logger.addHandler(stream_handler)
     

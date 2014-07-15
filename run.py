@@ -1,10 +1,11 @@
+import os
 from innovation_center.app import create_app
 from innovation_center.app.extensions import db
 from innovation_center.app.models import User, NewsArticle
 from innovation_center.app.constants import ADMIN
 from flask.ext.script import Manager, Shell
 
-app = create_app('DEVELOPMENT')
+app = create_app(os.environ.get('FLASK_CONFIG') or 'DEFAULT')
 manager = Manager(app)
 
 @manager.command
