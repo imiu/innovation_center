@@ -8,7 +8,7 @@ class DefaultConfig(object):
     SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(_basedir, 'data.sqlite')
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     RESULTS_PER_PAGE = 10
-    LOG_FOLDER = os.path.join(_basedir, 'app.log')
+    LOG_FOLDER = os.path.join(_basedir, 'innovation_center/logs')
 
     if not os.path.exists(os.path.dirname(LOG_FOLDER)):
         os.makedirs(LOG_FOLDER)
