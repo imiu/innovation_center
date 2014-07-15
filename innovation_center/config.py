@@ -34,5 +34,6 @@ class ProductionConfig(DefaultConfig):
 config = {
     'DEFAULT': DefaultConfig,
     'DEVELOPMENT': DevelopmentConfig,
-    'TESTING': TestingConfig
+    'TESTING': TestingConfig,
+    'PRODUCTION': ProductionConfig
 }
