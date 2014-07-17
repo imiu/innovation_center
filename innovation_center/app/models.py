@@ -94,6 +94,7 @@ class NewsArticle(db.Model):
         seed()
         for i in range(count):
             u = User.query.all()[randint(0, User.query.count() - 1)]
+
             article = NewsArticle(
                 title=f.lorem_ipsum.sentences(1),
                 subtitle=f.lorem_ipsum.sentences(randint(3,10)),
