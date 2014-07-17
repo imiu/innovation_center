@@ -81,6 +81,7 @@ class NewsArticle(db.Model):
     __tablename__ = 'news_articles'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(512))
+    subtitle = db.Column(db.String(512))
     body = db.Column(db.Text())
     time_written = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
@@ -95,6 +96,7 @@ class NewsArticle(db.Model):
             u = User.query.all()[randint(0, User.query.count() - 1)]
             article = NewsArticle(
                 title=f.lorem_ipsum.sentences(1),
+                subtitle=f.lorem_ipsum.sentences(randint(3,10)),
                 body=f.lorem_ipsum.sentences(randint(1,100)),
                 time_written=f.date.date(past=True, max_delta=20),
                 author=u

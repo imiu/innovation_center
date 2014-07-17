@@ -53,29 +53,33 @@
 <div class="row">
   <div class="col-md-7 col-md-offset-1">
     {% for article in articles %}
-    <div class="row">
-      <div class="col-md-3">
+    <div class="row absolute-positioned">
+      <div class="col-md-3 verticle-align">
         <a class="thumbnail" href="{{ url_for('root.get_article', article_id=article.id) }}">
           <img src="http://placehold.it/150x150">
         </a>
       </div>
       <div class="col-md-9">
-        <p class="lead"> {{ article.title }}</p>
-        <p class="text-muted large-article">{{ article.body }}</p>
-        <img class="img-circle" src="{{ article.author.gravatar(size=64) }}">
-        Written by {{ article.author.first_name }} {{ article.author.last_name }} on 
-        {{ moment(article.time_written).format('LLLL') }}
+        <h2> {{ article.title }}</h2>
+        <p class="text-muted large-article lead">{{ article.body }}</p>
+        <div class="author">
+          <img class="img-circle" src="{{ article.author.gravatar(size=32) }}">
+          Written by {{ article.author.first_name }} {{ article.author.last_name }} on 
+          {{ moment(article.time_written).fromNow() }}
+        </div>
       </div>
     </div>
     <hr/>
     {% endfor %}
-    <div class="pagination">
-      {{ macros.pagination(pagination, 'root.home') }}
-    </div>
   </div>
   <div class="col-md-4">
     <h1 class="lead">About this Site</h1>
     <p class="text-muted">This is a good site. You like this site. You know you do</p>
+  </div>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-4">
+      {{ macros.pagination(pagination, 'root.home') }}
+    </div>
   </div>
 </div>
 {% endblock %}

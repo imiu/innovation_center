@@ -3,6 +3,15 @@
     box-shadow: 3px 3px 3px #888888;
 }
 .large-article {
-	height: 200px;
+	height: 120px;
 	overflow-y: hidden;
+}
+
+.author {
+	bottom: 0px;
+}
+
+.verticle-align {
+	top: 50%;
+	transform: translateY(50%);
 }

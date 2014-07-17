@@ -16,3 +16,12 @@ def home():
 def get_article(article_id):
 	article = NewsArticle.query.get_or_404(article_id)
 	return render_template('article/article.html', article=article)
+
+@root.route('/foundation')
+def foundation():
+	page = int(request.args.get('page', 1))
+	paginate = NewsArticle.query.order_by(NewsArticle.time_written).paginate(
+        page, per_page=app.config['RESULTS_PER_PAGE']
+    )
+	articles = paginate.items
+	return render_template('foundation.html', articles=articles, pagination=paginate)

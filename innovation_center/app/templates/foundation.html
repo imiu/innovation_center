@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link href="{{ url_for('static', filename='plugins/foundation/css/foundation.min.css') }}" rel="stylesheet">
+</head>
+<body>
+  <nav class="top-bar" data-topbar>
+    <ul class="title-area">
+      <li class="name">
+        <h1>
+          <a href="#">
+            Top Bar Title
+          </a>
+        </h1>
+      </li>
+      <li class="toggle-topbar menu-icon"><a href="#"><span>menu</span></a></li>
+    </ul>
+    <section class="top-bar-section">
+      <ul class="right">
+        <li class="divider"></li>
+        <li class="has-dropdown">
+          <a href="#">Main Item 1</a>
+          <ul class="dropdown">
+            <li><label>Section Name</label></li>
+            <li class="has-dropdown">
+              <a href="#" class="">Has Dropdown, Level 1</a>
+              <ul class="dropdown">
+                <li><a href="#">Dropdown Options</a></li>
+                <li><a href="#">Dropdown Options</a></li>
+                <li><a href="#">Level 2</a></li>
+                <li><a href="#">Subdropdown Option</a></li>
+                <li><a href="#">Subdropdown Option</a></li>
+                <li><a href="#">Subdropdown Option</a></li>
+              </ul>
+            </li>
+            <li><a href="#">Dropdown Option</a></li>
+            <li><a href="#">Dropdown Option</a></li>
+            <li class="divider"></li>
+            <li><label>Section Name</label></li>
+            <li><a href="#">Dropdown Option</a></li>
+            <li><a href="#">Dropdown Option</a></li>
+            <li><a href="#">Dropdown Option</a></li>
+            <li class="divider"></li>
+            <li><a href="#">See all →</a></li>
+          </ul>
+        </li>
+        <li class="divider"></li>
+        <li><a href="#">Main Item 2</a></li>
+        <li class="divider"></li>
+        <li class="has-dropdown">
+          <a href="#">Main Item 3</a>
+          <ul class="dropdown">
+            <li><a href="#">Dropdown Option</a></li>
+            <li><a href="#">Dropdown Option</a></li>
+            <li><a href="#">Dropdown Option</a></li>
+            <li class="divider"></li>
+            <li><a href="#">See all →</a></li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+  </nav>
+  <div class="row">
+    {# <div class="large-15 columns"> #}
+      <div class="row">
+        <div class="large-12 hide-for-small">
+          <div id="featured" data-orbit>
+              <img src="http://placehold.it/1200x500&text=Slide Image 1" alt="slide image">
+              <img src="http://placehold.it/1200x500&text=Slide Image 2" alt="slide image">
+              <img src="http://placehold.it/1200x500&text=Slide Image 3" alt="slide image">
+            </div>
+      </div>
+    </div>
+      <div class="row">
+        <div class="large-12 columns show-for-small">
+          <img src="http://placehold.it/1200x700&text=Mobile Header">
+        </div>
+      </div><br>
+      <div class="row">
+        <div class="large-12 columns">
+          <div class="row">
+            <div class="large-4 small-6 columns">
+              <h4>Our Sponsors</h4><hr>
+ 
+              <div class="hide-for-small">
+                <div class="row">
+                  <div class="large-9 columns">
+                  	<img src="http://placehold.it/250x250&text=[ad]">
+                  </div>
+                </div>
+                <hr>
+ 
+                <div class="row">
+                  <div class="large-9 columns">
+                  	<img src="http://placehold.it/250x250&text=[ad]">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="large-8 small-12 columns">
+        		{% for article in articles %}
+        			<div class="row">
+        				<div class="large-2 columns small-3">
+        					<img src="http://placehold.it/80x80&text=[img]">
+        				</div>
+        				<div class="large-10 columns">
+        					<p class="lead"> {{ article.title }}</p>
+        					<p class="text-muted">{{ article.subtitle }}</p>
+        				</div>
+        			</div>
+        		{% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+ 
+      <footer class="row">
+        <div class="large-12 columns"><hr>
+            <div class="row">
+              <div class="large-6 columns">
+                  <p>© Burddy, 2014</p>
+              </div>
+ 
+              <div class="large-6 small-12 columns">
+                  <ul class="inline-list right">
+                    <li><a href="#">Link 1</a></li>
+                    <li><a href="#">Link 2</a></li>
+                    <li><a href="#">Link 3</a></li>
+                    <li><a href="#">Link 4</a></li>
+                  </ul>
+              </div>
+ 
+            </div>
+        </div>
+      </footer>
+    {# </div> #}
+  </div>
+  <script src="{{ url_for('static', filename='plugins/jquery/jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='plugins/foundation/js/foundation.min.js') }}"></script>
+  <script>
+    $(document).foundation();
+  </script>
+</body>
+</html>
